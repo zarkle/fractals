@@ -53,5 +53,31 @@ function pixelToPoint(x, y) {
   // Create a complex number based on our new XY values
   return math.complex(zx, zy)
 }
+
+// Update the elements that need to change
+function update() {
+  header.innerHTML = constant.toString()
+}
+
+// What to do when the mouse moves over the canvas
+function move(event) {
+  // Get the mouse's XY coordinates on canvas
+  mouseX = event.clientX-canvas.offsetLeft
+  mouseY = event.clientY-canvas.offsetTop
+
+  // Turn mouse coordinates into a point on the complex plane
+  constant = pixelToPoint(mouseX, mouseY)
+
+  // Round that point off to the nearest 0.01
+  constant.re = math.round(constant.re*100)/100
+  constant.im = math.round(constant.im*100)/100
+
+  // Update everything!
+  update()
+}
+
+// Trigger move every time the mouse moves over canvas
+canvas.addEventListener('pointermove', move)
+
 </script>
 </html>
