@@ -46,6 +46,8 @@ var constant = math.complex(0.28, 0.01)
 
 // Turn a point on the complex plane into a color
 function pointToColor(point) {
+  point = point.sub(constant)
+
   var red = point.re*255
   var green = point.im*255
   return `rgb(${red}, ${green}, 0)`
