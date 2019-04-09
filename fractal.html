@@ -69,11 +69,20 @@ function drawPixel(x, y, color) {
 
 // Redraw our canvas
 function draw() {
-  // Turn the point under the mouse into a color
-  var color = pointToColor(constant)
+  // Loop over every column of pixels
+  for (var y = 0; y < height; y++) {
+    // Loop over every row of pixels
+    for (var x = 0; x < width; x++) {
+      // Turn this pixel into a point in the complex plane
+      var point = pixelToPoint(x, y)
 
-  // Draw over the pixel under the mouse with that color
-  drawPixel(mouseX, mouseY, color)
+      // Turn that point into a color
+      var color = pointToColor(point)
+
+      // Draw over this pixel with that color
+      drawPixel(x, y, color)
+    }
+  }
 }
 
 // Update the elements that need to change
@@ -101,6 +110,9 @@ function move(event) {
 
 // Trigger move every time the mouse moves over canvas
 canvas.addEventListener('pointermove', move)
+
+// Update everything!
+update()
 
 </script>
 </html>
