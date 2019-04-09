@@ -50,7 +50,9 @@ function pointToColor(point) {
 
   var red = point.re*255
   var green = point.im*255
-  return `rgb(${red}, ${green}, 0)`
+  var blue = math.abs(point)*255
+
+  return `rgb(${red}, ${green}, ${blue})`
 }
 
 // Turn XY pixel coordinates into a point on the complex plane
