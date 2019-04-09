@@ -53,6 +53,9 @@ var clicked = false
 // How much we move the image
 var pan = math.complex(0, 0)
 
+// How much we zoom the image
+var zoom = 1
+
 // Apply the Julia Set formula to see if point z "escapes"
 function julia(z, i = 0) {
   // Apply the Julia Set formula: z*z+constant
@@ -93,6 +96,9 @@ function pixelToPoint(x, y) {
   // Create a complex number based on our new XY values
   var z = math.complex(zx, zy)
 
+  // Zoom the camera
+  z = z.div(zoom)
+
   // Pan the camera
   z = z.add(pan)
 
@@ -125,7 +131,7 @@ function draw() {
 
 // Update the elements that need to change
 function update() {
-  header.innerHTML = constant.toString()
+  header.innerHTML = constant.toString() + " at " + zoom + "X"
   draw()
 }
 
@@ -142,6 +148,9 @@ function click(event) {
 
   // Turn mouse coordinates into a point on the complex plane
   pan = pixelToPoint(mouseX, mouseY)
+
+  // Zoom in twice as far
+  zoom *= 2
 
   // Update everything!
   update()
