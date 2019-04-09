@@ -41,6 +41,9 @@ canvas.height = height
 var mouseX = 0
 var mouseY = 0
 
+// The point we use for C in our Julia Set equation
+var constant = math.complex(0.28, 0.01)
+
 // Turn XY pixel coordinates into a point on the complex plane
 function pixelToPoint(x, y) {
   // Map percentage of total width/height to a value from -1 to +1
@@ -50,6 +53,5 @@ function pixelToPoint(x, y) {
   // Create a complex number based on our new XY values
   return math.complex(zx, zy)
 }
-
 </script>
 </html>
