@@ -44,6 +44,13 @@ var mouseY = 0
 // The point we use for C in our Julia Set equation
 var constant = math.complex(0.28, 0.01)
 
+// Turn a point on the complex plane into a color
+function pointToColor(point) {
+  var red = point.re*255
+  var green = point.im*255
+  return `rgb(${red}, ${green}, 0)`
+}
+
 // Turn XY pixel coordinates into a point on the complex plane
 function pixelToPoint(x, y) {
   // Map percentage of total width/height to a value from -1 to +1
