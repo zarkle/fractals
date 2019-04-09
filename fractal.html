@@ -47,6 +47,12 @@ var constant = math.complex(0.28, 0.01)
 // The maximum number of times we iterate a point to see if it escapes
 var maxIterations = 64
 
+// Whether we have clicked yet
+var clicked = false
+
+// How much we move the image
+var pan = math.complex(0, 0)
+
 // Apply the Julia Set formula to see if point z "escapes"
 function julia(z, i = 0) {
   // Apply the Julia Set formula: z*z+constant
@@ -85,7 +91,12 @@ function pixelToPoint(x, y) {
   var zy = 1-(y/height)*2
 
   // Create a complex number based on our new XY values
-  return math.complex(zx, zy)
+  var z = math.complex(zx, zy)
+
+  // Pan the camera
+  z = z.add(pan)
+
+  return z
 }
 
 // Draw a single pixel on our canvas
@@ -118,8 +129,31 @@ function update() {
   draw()
 }
 
+function click(event) {
+  // Ignore the first click
+  if (!clicked) {
+    clicked = true
+    return
+  }
+
+  // Get the mouse's XY coordinates on canvas
+  mouseX = event.clientX-canvas.offsetLeft
+  mouseY = event.clientY-canvas.offsetTop
+
+  // Turn mouse coordinates into a point on the complex plane
+  pan = pixelToPoint(mouseX, mouseY)
+
+  // Update everything!
+  update()
+}
+
 // What to do when the mouse moves over the canvas
 function move(event) {
+  // Don't move after first click
+  if (clicked) {
+    return
+  }
+
   // Get the mouse's XY coordinates on canvas
   mouseX = event.clientX-canvas.offsetLeft
   mouseY = event.clientY-canvas.offsetTop
@@ -134,6 +168,9 @@ function move(event) {
   // Update everything!
   update()
 }
+
+// Trigger click every time the canvas is clicked
+canvas.addEventListener('click', click)
 
 // Trigger move every time the mouse moves over canvas
 canvas.addEventListener('pointermove', move)
