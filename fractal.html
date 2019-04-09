@@ -61,9 +61,25 @@ function pixelToPoint(x, y) {
   return math.complex(zx, zy)
 }
 
+// Draw a single pixel on our canvas
+function drawPixel(x, y, color) {
+  ctx.fillStyle = color
+  ctx.fillRect(x, y, 1, 1)
+}
+
+// Redraw our canvas
+function draw() {
+  // Turn the point under the mouse into a color
+  var color = pointToColor(constant)
+
+  // Draw over the pixel under the mouse with that color
+  drawPixel(mouseX, mouseY, color)
+}
+
 // Update the elements that need to change
 function update() {
   header.innerHTML = constant.toString()
+  draw()
 }
 
 // What to do when the mouse moves over the canvas
